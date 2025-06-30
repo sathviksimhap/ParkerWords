@@ -19,7 +19,7 @@ public class Solution {
     }
     public static char[][] getArray(){
         List<char[]> list = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\sride\\IdeaProjects\\Anagram\\src\\Base\\words_alpha.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\sride\\IdeaProjects\\ParkerWords\\src\\Base\\words_alpha.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if(line.length()==5){

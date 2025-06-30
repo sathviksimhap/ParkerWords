@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Main {
     static char[][] words_array;
-    static long pathsTried = 0L;
+    static long pathsTried = 0L, solutions=0L;
     static boolean found = false;
 
     public static void main(String[] args){
@@ -14,13 +14,13 @@ public class Main {
             backtrack(i, words_array[i], 0, new ArrayList<>());
     }
     public static void backtrack(int ind, char[] word, int bool_arr, List<char[]> words_used){
-        if(found) return;
+//        if(found) return;
 
         pathsTried++;
         if (pathsTried % 1_000_000_000 == 0) System.out.println("Tried " + pathsTried + " paths");
 
         if(words_used.size()==5){
-            System.out.println("Solution: ");
+            System.out.println("Solution: " + ++solutions);
             for(char[] word_in_list: words_used)
                 System.out.println(word_in_list);
             System.out.println("Paths tried before getting solution: " + pathsTried);
