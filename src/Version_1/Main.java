@@ -1,8 +1,7 @@
-package Anagram_v1;
+package Version_1;
 import Base.Solution;
 
 import java.util.*;
-
 
 public class Main {
     static char[][] words_array;
