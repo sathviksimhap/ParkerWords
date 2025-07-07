@@ -38,4 +38,24 @@ public class Solution {
         }
         return list.toArray(new char[0][]);
     }
+    public static char[][] getWordleArray() {
+        List<char[]> list = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\sride\\IdeaProjects\\ParkerWords\\src\\Base\\valid-wordle-words.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.length() == 5) {
+                    boolean[] unique_word = new boolean[26];
+                    boolean skip = false;
+                    for (int i = 0; i < 5; i++) {
+                        if (unique_word[(int) line.charAt(i) - 'a']) skip = true;
+                        else unique_word[(int) line.charAt(i) - 'a'] = true;
+                    }
+                    if (!skip) list.add(line.toCharArray());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list.toArray(new char[0][]);
+    }
 }

@@ -21,3 +21,7 @@ It took 05:20:715 to run
 And it explored 125,463,222,868 (125B) paths in total.
 It found 538 valid solutions.
 Don't know if they are the same ones Matt found, but the number matched and all of them are valid, so I'm assuming they are the same.
+
+Added a wordle version too, it found 23 combinations in 03:38:908.
+Again there is no anagram support.
+To run the wordle version just use the getWordleArray function instead of the getArray function.
