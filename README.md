@@ -3,7 +3,7 @@ I saw the video a long time ago. I knew of the existence of recursive algorithms
 But I was very intimidated by the scale and gave up. After a few 100 problems on Leetcode I decided to give it a try.
 First, even though I knew it wouldn't be optimal I implemented a DP solution.
 Then after it worked, I decided to use graphs.
-So as I was learning about how I could implement something like this I found out about cliques and the Bron–Kerbosch Algorithm.
+So as I was learnt about cliques and the Bron–Kerbosch Algorithm.
 
 
 Version 1.0: Unoptimized DP and operations
@@ -35,7 +35,7 @@ It took 05:20:715 to run, and it explored 125,463,222,868 (125B) paths in total.
 It found 538 valid solutions.
 Don't know if they are the same ones Matt found, but the number matched and all of them are valid, so I'm assuming they are the same.
 
-Added a wordle support for version 1 too, it found 23 combinations in 03:38:908.
+Added wordle support for version 1 too, it found 23 combinations in 03:38:908.
 Again there is no anagram support.
 To run the wordle version just use the getWordleArray function instead of the getArray function.
 
@@ -55,3 +55,10 @@ But the greatest time save is from the use of bitwise Anding to reduce the possi
 Which means one whole function call is replaced with an AND operation on just two bits.
 These two optimizations resulted in a 1000x drop in the number of total function calls (paths).
 It found 538 valid solutions in 00:21:471. After exploring 125,219,196 (125M) paths.
+
+
+Concepts I learnt while trying to solve this problem as fast as possible:
+
+Bitmasks
+Bitwise operations
+cliques
