@@ -1,14 +1,15 @@
-package Version_4;
+package Version_2.Version_2_0;
 
 import Base.Solution;
 import java.util.*;
 
 public class Main {
 
-    public static List<List<Integer>> solution = new ArrayList<>();
-    public static long paths = 0L, solutions = 0L;
+    public static List<List<Integer>> solutions = new ArrayList<>();
+    public static long paths = 0L;
 
     public static void main(String[] args){
+        long start = System.currentTimeMillis();
 
         char[][] words_array = Solution.getArray();
         HashMap<Integer, char[]> bitmask_to_word = getBitmaskMap(words_array);
@@ -21,12 +22,24 @@ public class Main {
         BitSet[] graph = getGraph(bitmask_set);
         solve(graph);
 
-        //temp output
-        for(List<Integer> sol: solution){
-            for(int s: sol)
-                System.out.print(Arrays.toString(bitmask_to_word.get(bitmask_set[s])) + " ");
+        List<List<char[]>> answers = getAnswers(bitmask_set, bitmask_to_word);
+        for(List<char[]>answer: answers) {
+            if (!Solution.isValid(answer)) {
+                System.out.println("Invalid solution submitted: " + answer);
+                return;
+            }
+        }
+        long end = System.currentTimeMillis();
+        String time_taken = timeTaken(start, end);
+
+        int sols = 0;
+        for (List<char[]> sol : answers) {
+            System.out.print("Solution " + ++sols + " :");
+            for (char[] word : sol)
+                System.out.print(" " + new String(word));
             System.out.println();
         }
+        System.out.println("Found " + answers.size() + " valid solutions in " + time_taken + ". After exploring " + String.format("%,d", paths) + " paths.");
     }
     public static void solve(BitSet[] graph){
         for(int u=0; u<graph.length; u++){
@@ -39,16 +52,11 @@ public class Main {
         }
     }
     public static void findClique(List<Integer> clique, BitSet cand, BitSet[] graph){
-
-//        if(clique.size() == 2) System.out.println(2);
         if(clique.size()==5){
-            solution.add(new ArrayList<>(clique));
-            System.out.println("Solutions found: " + ++solutions);
+            solutions.add(new ArrayList<>(clique));
             return;
         }
         paths++;
-        if(paths % 10_000_000 == 0)
-            System.out.println("Paths tried: " + paths);
 
         for(int v=cand.nextSetBit(0); v>=0; v=cand.nextSetBit(v+1)){
             List<Integer> new_clique = new ArrayList<>(clique);
@@ -60,12 +68,7 @@ public class Main {
             findClique(new_clique, new_cand, graph);
         }
     }
-    public static boolean canAdd(List<Integer> clique, int v, BitSet[] graph){
-        for(int u: clique)
-            if(!graph[u].get(v)) return false;
-        return true;
-    }
-    //pre processing functions
+    //Pre_processing Functions
     public static HashMap<Integer, char[]> getBitmaskMap(char[][] words_array){
         HashMap<Integer, char[]> ans = new HashMap<>();
         for(char[] word: words_array){
@@ -81,23 +84,29 @@ public class Main {
         BitSet[] bitset = new BitSet[l];
         for(int i=0; i<l; i++) bitset[i] = new BitSet(l);
 
-        for(int i=0; i<l; i++){
-            for(int j=i+1; j<l; j++){
+        for(int i=0; i<l; i++)
+            for(int j=i+1; j<l; j++)
                 if((bitmask_set[i] & bitmask_set[j]) == 0)
                     bitset[i].set(j);
-            }
-        }
+
         return bitset;
     }
+    //Post-processing Functions
+    public static List<List<char[]>> getAnswers(int[] bitmask_set, HashMap<Integer, char[]> bitmask_to_word) {
+        List<List<char[]>> answers = new ArrayList<>();
+        for (List<Integer> solution : solutions) {
+            List<char[]> answer = new ArrayList<>();
+            for (int i : solution)
+                answer.add(bitmask_to_word.get(bitmask_set[i]));
+            answers.add(answer);
+        }
+        return answers;
+    }
+    public static String timeTaken(long start, long end){
+        long total_millis = end - start;
+        long minutes = total_millis / 60000;
+        long seconds = (total_millis % 60000) / 1000;
+        long millis = total_millis % 1000;
+        return String.format("%02d:%02d:%03d", minutes, seconds, millis);
+    }
 }
-/*
-
-[3058, 3064, 3316, 4275, 5337]
-
-        base alg:
-        func search(clique, cands):
-            for n in cands
-            if can add n to clique:
-                new_cand = cand intersection neighbors of n
-                search(clique+n, new_cand)
-         */

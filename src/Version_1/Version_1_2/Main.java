@@ -1,4 +1,4 @@
-package Version_3;
+package Version_1.Version_1_2;
 
 import Base.Solution;
 import java.util.*;
